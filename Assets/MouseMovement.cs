@@ -21,8 +21,8 @@ public class MouseMovement : MonoBehaviour
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
-		go = gameObject.GetComponentInParent<Transform>();
-		go = gameObject.transform.parent;
+		// go = gameObject.GetComponentInParent<Transform>();
+		// go = gameObject.transform.parent;
 		body.centerOfMass = centerOfMass;
 		shrinkChange = defaultShrinkChange;
 		jumpMomentum = 0;
@@ -50,12 +50,24 @@ public class MouseMovement : MonoBehaviour
 		} else {
 			Expand();
 		}
+        print(body.transform.localScale);
 
 	}
+    // your puny frog legs can't hop this city
+    // modern problems require modern solutions
+
+
+    private void OnDrawGizmos()
+    {
+        body = GetComponent<Rigidbody2D>();
+        Gizmos.color = Color.blue;
+        Gizmos.DrawSphere(transform.position + transform.rotation * body.centerOfMass , .1f);
+    }
     private void Shrink() {
         if(body.transform.localScale[1] > 0.1) {
 			// Shrinks character
             body.transform.localScale += new Vector3(0,-shrinkChange,0);
+            //body.centerOfMass += new Vector2(0,-shrinkChange*2.333333333f);
 
 			// Adds jump speed the more the character shrinks
 			jumpMomentum += shrinkChange;
@@ -81,6 +93,7 @@ public class MouseMovement : MonoBehaviour
 
 			// Character expands back
             body.transform.localScale += new Vector3(0,expandChange,0);
+            //body.centerOfMass += new Vector2(0,expandChange*2.333333333f);
 			
 			// Resets shrink speed (wonky)
 			shrinkChange = defaultShrinkChange;
