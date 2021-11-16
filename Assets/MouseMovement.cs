@@ -64,7 +64,7 @@ public class MouseMovement : MonoBehaviour
         Gizmos.DrawSphere(transform.position + transform.rotation * body.centerOfMass , .1f);
     }
     private void Shrink() {
-        if(body.transform.localScale[1] > 0.1) {
+        if(body.transform.localScale[1] > 1/3f) {
 			// Shrinks character
             body.transform.localScale += new Vector3(0,-shrinkChange,0);
             //body.centerOfMass += new Vector2(0,-shrinkChange*2.333333333f);
@@ -75,11 +75,11 @@ public class MouseMovement : MonoBehaviour
         }
     }
     private void Expand() {
-        if(body.transform.localScale[1] < 0.3) {
+        if(body.transform.localScale[1] < 1) {
 			if (grounded) {
 				// Character jumps, could be done nicer?
-				body.AddForce(transform.up * jumpMomentum * 40);
-				body.AddForce(transform.up * jumpMomentum * 40, ForceMode2D.Impulse);
+				body.AddForce(transform.up * jumpMomentum * 10);
+				body.AddForce(transform.up * jumpMomentum * 10, ForceMode2D.Impulse);
 				grounded = false;
 				print("Aye that was a jump");
 			}
